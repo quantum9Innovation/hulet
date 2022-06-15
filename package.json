@@ -1,0 +1,39 @@
+{
+  "name": "hulet",
+  "version": "0.1.0",
+  "description": "The canvas as the Cartesian plane",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "browserify": "^17.0.0",
+    "canvas": "^2.9.1",
+    "mocha": "^10.0.0",
+    "terser": "^5.14.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quantum9Innovation/hulet.git"
+  },
+  "keywords": [
+    "web",
+    "canvas",
+    "math",
+    "graph",
+    "graphing-calculator",
+    "2d",
+    "2d-graphics",
+    "cartesian",
+    "cartesian-plane"
+  ],
+  "author": "quantum9innovation (q9i)",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/quantum9Innovation/hulet/issues"
+  },
+  "homepage": "https://github.com/quantum9Innovation/hulet#readme"
+}
