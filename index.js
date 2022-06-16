@@ -1,14 +1,31 @@
-const canvas = document.getElementById('canvas')
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
 
-window.innerWidth < window.innerHeight
-    ? (canvas.height = window.innerWidth)
-    : (canvas.width = window.innerHeight)
-const size = canvas.width
+let createHiPPICanvas = (w, h) => {
 
+    let ratio = window.devicePixelRatio
+    let canvas = document.getElementById('canvas')
+
+    canvas.width = w * ratio
+    canvas.height = h * ratio
+    canvas.style.width = w + 'px'
+    canvas.style.height = h + 'px'
+
+    return canvas
+
+}
+
+let cwidth = window.innerWidth
+let cheight = window.innerHeight
+
+window.innerWidth < window.innerHeight ? cheight = window.innerWidth : cwidth = window.innerHeight
+let size = cwidth
+
+const canvas = createHiPPICanvas(size, size)
 const ctx = canvas.getContext('2d')
 const two = new hulet.Cartesian(ctx, 10, 10)
+
+let ratio = window.devicePixelRatio
+size *= ratio
+
 
 const refresh = () => {
     // Clear the canvas
@@ -41,7 +58,8 @@ const refresh = () => {
 }
 refresh()
 
-// Zoom
+
+// Zoom (mouse)
 let zoomSpeed = 1.1
 const zoom = (e) => {
     e.preventDefault()
@@ -51,7 +69,47 @@ const zoom = (e) => {
 }
 canvas.onwheel = zoom
 
-// Translation
+// Zoom (mobile)
+let mZoomSpeed = 1.075
+let oldDist, newDist
+let scaling = false
+
+const pinchZoom = e => {
+    
+    newDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+    )
+    if (oldDist === undefined) {
+        oldDist = newDist
+        return
+    }
+
+    let scale = newDist > oldDist ? 1 / mZoomSpeed : mZoomSpeed
+    two.Camera.zoom *= scale
+
+    oldDist = newDist
+    refresh()
+
+}
+
+document.addEventListener('touchstart', e => {
+
+    e.preventDefault()
+    if (e.touches.length === 2) scaling = true
+
+}, { passive: false })
+document.addEventListener('touchmove', e => {
+    if (scaling) pinchZoom(e)
+}, { passive: false })
+document.addEventListener(
+    'touchend', 
+    e => { scaling = false }, 
+    { passive: false }
+)
+
+
+// Translation (drag)
 let down = false
 document.addEventListener('mousedown', () => {
     down = true
@@ -82,4 +140,43 @@ document.addEventListener('mousemove', (e) => {
 
         refresh()
     }
+})
+
+// Translation (mobile)
+let mDown = false
+document.addEventListener('touchstart', () => { mDown = true })
+document.addEventListener('touchend', e => {
+    
+    e.preventDefault()
+    mDown = false
+    mx = undefined
+    my = undefined
+
+})
+
+let mx, my
+const mSpeed = 3
+document.addEventListener('touchmove', e => {
+
+    if (mDown && !scaling) {
+        
+        e.preventDefault()
+        if (mx === undefined) mx = e.touches[0].clientX
+        if (my === undefined) my = e.touches[0].clientY
+
+        const dx = e.touches[0].clientX - mx
+        const dy = e.touches[0].clientY - my
+
+        let [cx, cy] = two.Camera.center
+        cx -= dx * mSpeed * two.Camera.zoom
+        cy += dy * mSpeed * two.Camera.zoom
+        two.Camera.center = [cx, cy]
+
+        mx = e.touches[0].clientX
+        my = e.touches[0].clientY
+
+        refresh()
+
+    }
+
 })

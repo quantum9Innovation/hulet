@@ -305,10 +305,10 @@ class Cartesian {
 
         this.strokeStyle = oldStyle
     }
-    label(delta, X = true, Y = true, style = 'black', font = '16px times') {
-        // Label axes with the given spacing `delta` and `style='black'`,
-        // `font='times'`; use `X` and `Y` to determine which axes to label
-        // (default to `true`)
+    label(delta, X = true, Y = true, style = 'black', font = '16px times', offset = 5) {
+        // Label axes with the given spacing `delta`, `style='black'`,
+        // `font='times'`, and `offset=5` (in px) from axes; use `X` and `Y` 
+        // to determine which axes to label (default to `true`)
 
         if (arguments.length == 2) {
             style = arguments[1]
@@ -334,7 +334,9 @@ class Cartesian {
         let y2 = Math.round(endpoints[0][1] / delta) * delta
 
         if (X) {
+          
             for (let x = x1; x < x2; x += delta) {
+              
                 this.ctx.textAlign = 'center'
                 this.ctx.textBaseline = 'top'
 
@@ -342,14 +344,21 @@ class Cartesian {
                     // Don't intersect origin label with axes
                     this.ctx.textAlign = 'right'
                     this.ctx.textBaseline = 'top'
+                    let pos = this.Camera.transform([0, 0])
+                    let dist = delta / this.Camera.zoom
+                    this.ctx.fillText(x, pos[0] - offset, pos[1] + offset, dist)
+                    continue
                 }
 
                 let pos = this.Camera.transform([x, 0])
                 let dist = delta / this.Camera.zoom
-                this.ctx.fillText(x, pos[0], pos[1], dist)
+                this.ctx.fillText(x, pos[0], pos[1] + offset, dist)
+
             }
+          
         }
         if (Y) {
+          
             for (let y = y1; y < y2; y += delta) {
                 // Don't duplicate the origin label
                 if (y == 0 && X) continue
@@ -357,8 +366,10 @@ class Cartesian {
                 let pos = this.Camera.transform([0, y])
                 this.ctx.textAlign = 'right'
                 this.ctx.textBaseline = 'middle'
-                this.ctx.fillText(y, pos[0], pos[1])
+                this.ctx.fillText(y, pos[0] - offset, pos[1])
+              
             }
+          
         }
 
         this.ctx.restore()
