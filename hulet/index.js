@@ -5,10 +5,8 @@
 const core = require('./core')
 const { Cartesian } = core
 
-
 // Exports
 module.exports = {
-
     // Reserved
     Cartesian,
 
@@ -17,5 +15,4 @@ module.exports = {
 
     // Metadata
     version: 'v0.1.0',
-
 }
