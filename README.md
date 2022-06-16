@@ -1,5 +1,7 @@
 # Hulet
 
+[![Node.js CI](https://github.com/quantum9Innovation/hulet/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/quantum9Innovation/hulet/actions/workflows/node.js.yml)
+
 > IPA: /huːlət/*, Amharic: ሁለት, Definition: 'two'
 
 The canvas as the Cartesian plane  
