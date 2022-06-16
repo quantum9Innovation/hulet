@@ -13,7 +13,9 @@
     "terser": "^5.14.1"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "scripts/start.sh",
+    "build": "scripts/build.sh"
   },
   "repository": {
     "type": "git",
