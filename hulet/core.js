@@ -464,7 +464,7 @@ class Cartesian {
         let start = X[0]
         let span = X[1] - X[0]
 
-        for (let i = 0; i < k; i++) {
+        for (let i = 0; i <= k; i++) {
 
             // Calculate the current parameter
             let x = start + i * span / k
