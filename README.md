@@ -1,5 +1,7 @@
 # Hulet
 
+[![Node.js CI](https://github.com/quantum9Innovation/hulet/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/quantum9Innovation/hulet/actions/workflows/node.js.yml)
+
 > IPA: /huːlət/*, Amharic: ሁለት, Definition: 'two'
 
 The canvas as the Cartesian plane  
@@ -13,7 +15,13 @@ This README will likely be updated as the project progresses to feature the late
 
 ## Building
 
-Install with: `npm install hulet`
+Install with:
+
+- **Node.js**: `npm install hulet`
+- **Web**: <https://cdn.jsdelivr.net/npm/hulet@0.1.2/dist/hulet.min.js> (JSDelivr)
+- **Web** (raw*): [dist/hulet.min.js](https://raw.githubusercontent.com/quantum9Innovation/hulet/npm-deploy/dist/hulet.min.js)
+
+\**Always pin to a version in production to avoid unsafe code execution*
 
 **Important note**: Unfortunately, there is no complete documentation for the package as internal structure is still rapidly changing.
 This is currently a work in progress, so for now the guide presented [here](#guide) will have to suffice.
