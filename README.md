@@ -39,6 +39,7 @@ For a more impressive demo, simply run `npm start`, which will launch [index.htm
 ## Screenshots
 
 If the tests work, you should see two images like those below appear in the [artifacts](./test/artifacts/) directory.
+For an interactive demo, see: <https://quantum9innovation.github.io/hulet/>
 
 ![](./test/artifacts/geometry.png)
 ![](./test/artifacts/algebra.png)
