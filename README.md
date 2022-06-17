@@ -18,7 +18,7 @@ This README will likely be updated as the project progresses to feature the late
 Install with:
 
 - **Node.js**: `npm install hulet`
-- **Web**: <https://cdn.jsdelivr.net/npm/hulet@0.1.3/dist/hulet.min.js> (JSDelivr)
+- **Web**: <https://cdn.jsdelivr.net/npm/hulet@0.1.4/dist/hulet.min.js> (JSDelivr)
 - **Web** (raw*): [dist/hulet.min.js](https://raw.githubusercontent.com/quantum9Innovation/hulet/npm-deploy/dist/hulet.min.js)
 
 \**Always pin to a version in production to avoid unsafe code execution*
