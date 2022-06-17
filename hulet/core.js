@@ -340,7 +340,7 @@ class Cartesian {
         this.strokeStyle = oldStyle
 
     }
-    label(delta, X=true, Y=true, style='black', font='16px times') {
+    label(delta, X=true, Y=true, style='black', font='16px times', offset=5) {
         // Label axes with the given spacing `delta` and `style='black'`, 
         // `font='times'`; use `X` and `Y` to determine which axes to label
         // (default to `true`)
@@ -385,12 +385,16 @@ class Cartesian {
                     // Don't intersect origin label with axes
                     this.ctx.textAlign = 'right'
                     this.ctx.textBaseline = 'top'
-                    
+                    let pos = this.Camera.transform([0, 0])
+                    let dist = delta / this.Camera.zoom
+                    this.ctx.fillText(x, pos[0] - offset, pos[1] + offset, dist)
+                    continue
+
                 }
 
                 let pos = this.Camera.transform([x, 0])
                 let dist = delta / this.Camera.zoom
-                this.ctx.fillText(x, pos[0], pos[1], dist)
+                this.ctx.fillText(x, pos[0], pos[1] + offset, dist)
 
             }
 
@@ -405,7 +409,7 @@ class Cartesian {
                 let pos = this.Camera.transform([0, y])
                 this.ctx.textAlign = 'right'
                 this.ctx.textBaseline = 'middle'
-                this.ctx.fillText(y, pos[0], pos[1])
+                this.ctx.fillText(y, pos[0] - offset, pos[1])
 
             }
 
@@ -460,7 +464,7 @@ class Cartesian {
         let start = X[0]
         let span = X[1] - X[0]
 
-        for (let i = 0; i < k; i++) {
+        for (let i = 0; i <= k; i++) {
 
             // Calculate the current parameter
             let x = start + i * span / k
