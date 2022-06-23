@@ -14,6 +14,6 @@ module.exports = {
     core,
 
     // Metadata
-    version: 'v0.1.2',
+    version: 'v0.1.4',
 
 }

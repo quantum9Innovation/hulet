@@ -417,7 +417,7 @@ class Cartesian {
         let start = X[0]
         let span = X[1] - X[0]
 
-        for (let i = 0; i < k; i++) {
+        for (let i = 0; i <= k; i++) {
             // Calculate the current parameter
             let x = start + (i * span) / k
             if (x < X[0] || x > X[1]) continue
@@ -425,10 +425,8 @@ class Cartesian {
             if (y < Y[0] || y > Y[1]) continue
 
             // Calculate with the next parameter value
-            let xPrime = start + ((i + 1) * span) / k
-            if (xPrime < X[0] || xPrime > X[1]) continue
+            let xPrime = start + (i + 1) * span / k
             let yPrime = f(xPrime)
-            if (yPrime < Y[0] || yPrime > Y[1]) continue
 
             // Plot a linear approximation
             this.segment([x, y], [xPrime, yPrime])
