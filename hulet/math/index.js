@@ -3,6 +3,5 @@
 // Imports
 const form = require('./form')
 
-
 // Exports
 module.exports = { form }

@@ -14,9 +14,7 @@ const canvas = createCanvas(256, 256)
 const ctx = canvas.getContext('2d')
 const two = new hulet.Cartesian(ctx, 10, 10)
 
-
 const draw = () => {
-
     // Geometry
 
     // Lines
@@ -25,23 +23,28 @@ const draw = () => {
     two.line([-2, 3], [2, 3])
 
     // Shapes
-    two.polygon([[-1, -1], [-2, -1], [-2, -2], [-1, -2]])
-    two.stroke = false; two.fillStyle = '#0af'
+    two.polygon([
+        [-1, -1],
+        [-2, -1],
+        [-2, -2],
+        [-1, -2],
+    ])
+    two.stroke = false
+    two.fillStyle = '#0af'
     two.circle([-3, -3], 1)
 
     // Points
     two.point([0, 0])
     two.point([1, 1])
-
-}; draw()
-
+}
+draw()
 
 // Storage
-const out = fs.createWriteStream(path.join(
-    __dirname,
-    'artifacts',
-    'geometry.png'
-))
+const out = fs.createWriteStream(
+    path.join(__dirname, 'artifacts', 'geometry.png'),
+)
 const stream = canvas.createPNGStream()
 stream.pipe(out)
-out.on('finish', () => { console.log('Geometry succeeded') })
+out.on('finish', () => {
+    console.log('Geometry succeeded')
+})
