@@ -9,13 +9,19 @@
   "devDependencies": {
     "browserify": "^17.0.0",
     "canvas": "^2.9.1",
+    "eslint": "^8.17.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "mocha": "^10.0.0",
+    "prettier": "^2.7.1",
     "terser": "^5.14.1"
   },
   "scripts": {
     "test": "mocha",
     "start": "scripts/start.sh",
-    "build": "scripts/build.sh"
+    "build": "scripts/build.sh",
+    "lint": "eslint hulet --fix",
+    "format": "prettier --write '**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -38,5 +44,8 @@
   "bugs": {
     "url": "https://github.com/quantum9Innovation/hulet/issues"
   },
-  "homepage": "https://github.com/quantum9Innovation/hulet#readme"
+  "homepage": "https://github.com/quantum9Innovation/hulet#readme",
+  "dependencies": {
+    "eslint-config-airbnb": "^19.0.4"
+  }
 }
