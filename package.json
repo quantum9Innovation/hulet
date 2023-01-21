@@ -30,7 +30,8 @@
     "2d",
     "2d-graphics",
     "cartesian",
-    "cartesian-plane"
+    "cartesian-plane",
+    "geometry"
   ],
   "author": "quantum9innovation (q9i)",
   "license": "GPL-3.0-or-later",
