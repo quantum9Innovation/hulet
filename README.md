@@ -84,12 +84,12 @@ For now, we'll create a 10x10 canvas as shown below:
 const two = new hulet.Cartesian(ctx, 10, 10)
 ```
 
-The four corners of this plane are given by the vertices $ (\pm 5, \pm 5) $, with the center at the origin $ (0, 0) $.
+The four corners of this plane are given by the vertices $(\pm 5, \pm 5)$, with the center at the origin $(0, 0)$.
 However, in reality, the plane continues on to infinity; these dimensions merely represent the *visible* portion of the Cartesian plane.
 
 We can set an initial perspective for our Cartesian space by accessing the built-in Camera object.
 Perspectives are a way of applying a series of transformations to the Cartesian plane.
-For example, if we want to center our plane at the point $ (1, 1) $ and zoom in by a factor of $ 2 $, we would use:
+For example, if we want to center our plane at the point $(1, 1)$ and zoom in by a factor of $2$, we would use:
 
 ```js
 two.Camera.center = [1, 1]
@@ -145,7 +145,7 @@ After that, various styling properties can be passed in as well.
 
 Now that we have the axes and gridlines, we can plot some functions.
 We'll begin with parametric equations.
-Let's plot the unit circle parameterized by the equation $ (\cos t, \sin t) $:
+Let's plot the unit circle parameterized by the equation $(\cos t, \sin t)$:
 
 ```js
 const f = t => [Math.cos(t), Math.sin(t)]
