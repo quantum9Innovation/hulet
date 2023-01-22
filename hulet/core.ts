@@ -1,16 +1,25 @@
 // Core logic and functions for Hulet
 // Most of the code depends on other modules
 
+// Typings
+import { vector, range } from './primitives'
+import { CanvasRenderingContext2D as Context } from 'canvas'
+
 // Dependencies
-const { form } = require('./math')
+import { form } from './math'
 
 
 // Camera
 class Camera {
     // Create a new camera linked to a specific canvas
     // Manages perspective, zoom, translation, and other 2D transformations
+    
+    // Properties
+    Canvas
+    center: vector
+    zoom
 
-    constructor(Canvas) { 
+    constructor(Canvas: Cartesian) { 
         // Initialize the camera
 
         this.Canvas = Canvas
@@ -19,7 +28,7 @@ class Camera {
 
     }
 
-    transform(vec) {
+    transform(vec: vector) {
         // Transform a coordinate pair given by the vector `vec` from the 
         // Cartesian plane into the canvas coordinate system
 
@@ -40,7 +49,7 @@ class Camera {
         return nVec
 
     }
-    invTransform(vec) {
+    invTransform(vec: vector) {
         // Transform a coordinate pair given by the vector `vec` from the
         // canvas coordinate system into the Cartesian plane
         // *Inverse of `transform`*
@@ -68,7 +77,7 @@ class Camera {
 
         let w = this.Canvas.cwidth
         let h = this.Canvas.cheight
-        let endpoints = [
+        let endpoints: vector[] = [
             [w, 0],
             [0, 0],
             [0, h],
@@ -87,7 +96,22 @@ class Cartesian {
     // Initialize a Cartesian plane over an existing canvas instance
     // The standard drawing context in Hulet
 
-    constructor(ctx, w, h) {
+    // Properties
+    ctx
+    cwidth
+    cheight
+    width
+    height
+    pointStyle
+    pointSize
+    strokeStyle
+    lineWidth
+    fillStyle
+    stroke
+    fill
+    Camera?: Camera
+
+    constructor(ctx: Context, w: number, h: number) {
         // Initialize a Cartesian plane over the given context `ctx` with
         // dimensions `w` (width) and `h` (height), which set the initial 
         // `Camera` perspective.
@@ -137,11 +161,11 @@ class Cartesian {
 
 
     // Geometry
-    point(vec) {
+    point(vec: vector) {
         // Draw a point at the given vector `vec`
 
         // Get coordinates
-        let [x, y] = this.Camera.transform(vec)
+        let [x, y] = (this.Camera as Camera).transform(vec)
 
         // Draw the point
         this.ctx.beginPath()
@@ -150,12 +174,12 @@ class Cartesian {
         this.ctx.fill()
 
     }
-    segment(u, v) {
+    segment(u: vector, v: vector) {
         // Draw a line segment from the vector `u` to the vector `v`
 
         // Get coordinates
-        let [x1, y1] = this.Camera.transform(u)
-        let [x2, y2] = this.Camera.transform(v)
+        let [x1, y1] = (this.Camera as Camera).transform(u)
+        let [x2, y2] = (this.Camera as Camera).transform(v)
 
         // Draw the segment
         this.ctx.beginPath()
@@ -166,7 +190,7 @@ class Cartesian {
         this.ctx.stroke()
 
     }
-    ray(u, v) {
+    ray(u: vector, v: vector) {
         // Draw a ray from the vector `u` extending past the vector `v`
 
         // Decompose coordinates
@@ -181,9 +205,9 @@ class Cartesian {
             let dir = y2 > y1 ? 1 : -1
 
             // Calculate endpoint
-            let end
-            let endY
-            let endpoints = this.Camera.getEndpoints()
+            let end: vector
+            let endY: number
+            let endpoints = (this.Camera as Camera).getEndpoints()
             dir === 1 ? endY = endpoints[0][1] : endY = endpoints[2][1]
             end = [x1, endY]
 
@@ -192,15 +216,15 @@ class Cartesian {
 
         }
         let m = (y2 - y1) / (x2 - x1)
-        const rayEq = (x) => y1 + m * (x - x1)
+        const rayEq = (x: number) => y1 + m * (x - x1)
 
         // Determine direction
         let dir = x2 > x1 ? 1 : -1
 
         // Calculate endpoint
-        let end
-        let endX
-        let endpoints = this.Camera.getEndpoints()
+        let end: vector
+        let endX: number
+        let endpoints = (this.Camera as Camera).getEndpoints()
         dir === 1 ? endX = endpoints[0][0] : endX = endpoints[1][0]
         end = [endX, rayEq(endX)]
 
@@ -208,18 +232,18 @@ class Cartesian {
         this.segment(u, end)
 
     }
-    line(u, v) {
+    line(u: vector, v: vector) {
         // Draw a line extending through two vectors `u` and `v`
 
         this.ray(u, v)
         this.ray(v, u)
 
     }
-    polygon(vertices) {
+    polygon(vertices: vector[]) {
         // Draw a polygon with the given vertices `vertices`
 
         // Get coordinates
-        let coords = vertices.map(v => this.Camera.transform(v))
+        let coords = vertices.map(v => (this.Camera as Camera).transform(v))
 
         // Draw the polygon
         this.ctx.beginPath()
@@ -242,15 +266,15 @@ class Cartesian {
         }
 
     }
-    circle(c, r) {
+    circle(c: vector, r: number) {
         // Draw a circle with the given center `c` and radius `r`
 
         // Get coordinates
-        let [x, y] = this.Camera.transform(c)
+        let [x, y] = (this.Camera as Camera).transform(c)
 
         // Draw the circle
         this.ctx.beginPath()
-        this.ctx.arc(x, y, r / this.Camera.zoom, 0, 2 * Math.PI)
+        this.ctx.arc(x, y, r / (this.Camera as Camera).zoom, 0, 2 * Math.PI)
         if (this.fill) {
             this.ctx.fillStyle = this.fillStyle
             this.ctx.fill()
@@ -271,14 +295,14 @@ class Cartesian {
         let oldStyle = this.strokeStyle
         this.strokeStyle = style
         
-        let endpoints = this.Camera.getEndpoints()
+        let endpoints = (this.Camera as Camera).getEndpoints()
         if (x) this.segment([endpoints[1][0], 0], [endpoints[0][0], 0])
         if (y) this.segment([0, endpoints[2][1]], [0, endpoints[0][1]])
 
         this.strokeStyle = oldStyle
 
     }
-    grid(delta, x=true, y=true, style='rgba(0,0,0,0.25)') {
+    grid(delta: number, x=true, y=true, style='rgba(0,0,0,0.25)') {
         // Draw the Cartesian grid with the given spacing `delta` and
         // `style='rgba(0,0,0,0.25)'`; use `x` and `y` to determine 
         // which axes to draw (default to `true`)
@@ -294,7 +318,7 @@ class Cartesian {
         let oldStyle = this.strokeStyle
         this.strokeStyle = style
 
-        let endpoints = this.Camera.getEndpoints()
+        let endpoints = (this.Camera as Camera).getEndpoints()
         let x1 = Math.round(endpoints[1][0] / delta) * delta
         let y1 = Math.round(endpoints[2][1] / delta) * delta
         let x2 = Math.round(endpoints[0][0] / delta) * delta
@@ -340,7 +364,7 @@ class Cartesian {
         this.strokeStyle = oldStyle
 
     }
-    label(delta, X=true, Y=true, style='black', font='16px times', offset=5) {
+    label(delta: number, X=true, Y=true, style='black', font='16px times', offset=5) {
         // Label axes with the given spacing `delta` and `style='black'`, 
         // `font='times'`; use `X` and `Y` to determine which axes to label
         // (default to `true`)
@@ -368,7 +392,7 @@ class Cartesian {
         this.ctx.font = font
         this.ctx.fillStyle = style
 
-        let endpoints = this.Camera.getEndpoints()
+        let endpoints = (this.Camera as Camera).getEndpoints()
         let x1 = Math.round(endpoints[1][0] / delta) * delta
         let y1 = Math.round(endpoints[2][1] / delta) * delta
         let x2 = Math.round(endpoints[0][0] / delta) * delta
@@ -385,16 +409,16 @@ class Cartesian {
                     // Don't intersect origin label with axes
                     this.ctx.textAlign = 'right'
                     this.ctx.textBaseline = 'top'
-                    let pos = this.Camera.transform([0, 0])
-                    let dist = delta / this.Camera.zoom
-                    this.ctx.fillText(x, pos[0] - offset, pos[1] + offset, dist)
+                    let pos = (this.Camera as Camera).transform([0, 0])
+                    let dist = delta / (this.Camera as Camera).zoom
+                    this.ctx.fillText(x.toString(), pos[0] - offset, pos[1] + offset, dist)
                     continue
 
                 }
 
-                let pos = this.Camera.transform([x, 0])
-                let dist = delta / this.Camera.zoom
-                this.ctx.fillText(x, pos[0], pos[1] + offset, dist)
+                let pos = (this.Camera as Camera).transform([x, 0])
+                let dist = delta / (this.Camera as Camera).zoom
+                this.ctx.fillText(x.toString(), pos[0], pos[1] + offset, dist)
 
             }
 
@@ -406,10 +430,10 @@ class Cartesian {
                 // Don't duplicate the origin label
                 if (y == 0 && X) continue
 
-                let pos = this.Camera.transform([0, y])
+                let pos = (this.Camera as Camera).transform([0, y])
                 this.ctx.textAlign = 'right'
                 this.ctx.textBaseline = 'middle'
-                this.ctx.fillText(y, pos[0] - offset, pos[1])
+                this.ctx.fillText(y.toString(), pos[0] - offset, pos[1])
 
             }
 
@@ -418,7 +442,7 @@ class Cartesian {
         this.ctx.restore()
 
     }
-    parametric(f, T, k=256) {
+    parametric(f: (t: number) => vector, T: range, k=256) {
         // Plot the parametric curve `f(t)` over the interval [`T[0]`, `T[1]`]
         // with `k=256` linear approximations
 
@@ -441,9 +465,9 @@ class Cartesian {
         }
 
     }
-    graph(f, X, Y, k=256) {
+    graph(f: (x: number) => number, X: range, Y: range, k=256) {
         /*
-            Plot the graph of `f(x, y)` over the domains:
+            Plot the graph of `y=f(x)` over the domains:
             x ∈ [`X[0]`, `X[1]`] and y ∈ [`Y[0]`, `Y[1]`]
             with `k=256` linear approximations.
             If `X`, `Y` domains are not specified, 
@@ -453,7 +477,7 @@ class Cartesian {
         if (X === undefined || Y === undefined) {
 
             // Get endpoints
-            let endpoints = this.Camera.getEndpoints()
+            let endpoints = (this.Camera as Camera).getEndpoints()
 
             // Set domains
             X === undefined ? X = [endpoints[1][0], endpoints[0][0]] : X = X
@@ -487,7 +511,7 @@ class Cartesian {
 
 
 // Initialize Hulet and export relevant functions
-module.exports = {
+export {
 
     // Base
     Cartesian,

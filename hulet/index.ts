@@ -2,12 +2,14 @@
 // All logic is contained within `core.js`
 
 // Imports
-const core = require('./core')
+import * as core from './core'
 const { Cartesian } = core
 
+// Metadata
+const version = '0.1.4'
 
 // Exports
-module.exports = {
+export {
 
     // Reserved
     Cartesian,
@@ -16,6 +18,6 @@ module.exports = {
     core,
 
     // Metadata
-    version: 'v0.1.4',
+    version,
 
 }

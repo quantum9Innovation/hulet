@@ -2,14 +2,17 @@
 // transformations; these functions are critical for the initial rendering 
 // process
 
+// Typings
+import { vector } from '../primitives'
+
 // Linear transformations
 // Translate a vector `u` by a transformation specified by vector `v`
-const translate = (u, v) => [u[0] + v[0], u[1] + v[1]]
+const translate = (u: vector, v: vector): vector => [u[0] + v[0], u[1] + v[1]]
 // Scale a vector `v` by scalar `k`
-const scale = (v, k) => [v[0] * k, v[1] * k]
+const scale = (v: vector, k: number): vector => [v[0] * k, v[1] * k]
 // Negate a vector `v` (180 deg rotation or scale with `k=-1`)
-const negate = v => [-v[0], -v[1]]
-const rotate = (v, theta) => {
+const negate = (v: vector): vector => [-v[0], -v[1]]
+const rotate = (v: vector, theta: number): vector => {
     // Rotate a vector `v` by angle `theta`
 
     // Decompose vector into components
@@ -29,7 +32,7 @@ const rotate = (v, theta) => {
 }
 
 
-module.exports = {
+export {
 
     translate,
     scale,
