@@ -3,7 +3,10 @@
 
 // Typings
 import { vector, range } from './primitives'
-import { CanvasRenderingContext2D as Context } from 'canvas'
+import { Canvas, CanvasRenderingContext2D } from 'canvas'
+interface Context extends CanvasRenderingContext2D {
+    canvas: Canvas
+}
 
 // Dependencies
 import { form } from './math'
@@ -302,7 +305,7 @@ class Cartesian {
         this.strokeStyle = oldStyle
 
     }
-    grid(delta: number, x=true, y=true, style='rgba(0,0,0,0.25)') {
+    grid(delta: number, x: boolean|string=true, y=true, style='rgba(0,0,0,0.25)') {
         // Draw the Cartesian grid with the given spacing `delta` and
         // `style='rgba(0,0,0,0.25)'`; use `x` and `y` to determine 
         // which axes to draw (default to `true`)
@@ -364,7 +367,10 @@ class Cartesian {
         this.strokeStyle = oldStyle
 
     }
-    label(delta: number, X=true, Y=true, style='black', font='16px times', offset=5) {
+    label(
+        delta: number, X: boolean|string=true, Y: boolean|string=true,
+        style='black', font='16px times', offset=5
+    ) {
         // Label axes with the given spacing `delta` and `style='black'`, 
         // `font='times'`; use `X` and `Y` to determine which axes to label
         // (default to `true`)
@@ -465,7 +471,7 @@ class Cartesian {
         }
 
     }
-    graph(f: (x: number) => number, X: range, Y: range, k=256) {
+    graph(f: (x: number) => number, X?: range, Y?: range, k=256) {
         /*
             Plot the graph of `y=f(x)` over the domains:
             x ∈ [`X[0]`, `X[1]`] and y ∈ [`Y[0]`, `Y[1]`]

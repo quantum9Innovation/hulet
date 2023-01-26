@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "module": "CommonJS",
-    "baseUrl": "hulet",
+    "baseUrl": ".",
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist/ts",
