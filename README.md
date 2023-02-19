@@ -1,6 +1,6 @@
 # Hulet
 
-[![Node.js CI](https://github.com/quantum9Innovation/hulet/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/quantum9Innovation/hulet/actions/workflows/node.js.yml)
+[![Node.js CI](https://github.com/quantum9Innovation/hulet/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/quantum9Innovation/hulet/actions/workflows/test.yml)
 
 > IPA: /huːlət/*, Amharic: ሁለት, Definition: 'two'
 
@@ -10,7 +10,6 @@ The canvas as the Cartesian plane
 ---
 
 As of right now, Hulet is still very much in the alpha stage of development.
-You can track what needs to be done and what's getting done in [TODOS.md](https://github.com/quantum9Innovation/hulet/blob/main/TODOS.md).
 This README will likely be updated as the project progresses to feature the latest developments.
 
 ## Building
@@ -40,8 +39,8 @@ cd hulet; npm install .
 If you intend to work on a fork, installing the dev dependencies with `npm install --dev` will be quite helpful.
 Additionally, if you plan on using Hulet in native Node.js as opposed to in the browser, you'll need to install [`canvas`](https://www.npmjs.com/package/canvas) to create the initial 2D rendering context.
 
-Sost is designed to work both in a native Node.js environment (through the `canvas` module) and in a browser environment (using Browserify and Terser).
-To see some examples of Sost running in Node.js, simply run `npm test` from the project root and check [artifacts](https://github.com/quantum9Innovation/hulet/tree/main/test/artifacts) for the results.
+Hulet is designed to work both in a native Node.js environment (through the `canvas` module) and in a browser environment (using Browserify and Terser).
+To see some examples of Hulet running in Node.js, simply run `npm test` from the project root and check [artifacts](https://github.com/quantum9Innovation/hulet/tree/main/test/artifacts) for the results.
 For a more impressive demo, simply run `npm start`, which will launch [index.html](https://github.com/quantum9Innovation/hulet/blob/main/index.html) in the browser, and then drag to pan and scroll to zoom.
 
 ## Screenshots
@@ -49,8 +48,8 @@ For a more impressive demo, simply run `npm start`, which will launch [index.htm
 If the tests work, you should see two images like those below appear in the [artifacts](https://github.com/quantum9Innovation/hulet/tree/main/test/artifacts) directory.
 For an interactive demo, see: <https://quantum9innovation.github.io/hulet/>
 
-![](./test/artifacts/geometry.png)
-![](./test/artifacts/algebra.png)
+![](./test/baseline/geometry.png)
+![](./test/baseline/algebra.png)
 
 *The first test (left) demonstrates Hulet's ability to graph primitive geometric objects in the Cartesian plane. The second (right) demonstrates Hulet's algebraic graphing utilities.*
 
@@ -101,13 +100,13 @@ Notice that in setting the `zoom` property, we never use `Camera.zoom = 2`, but 
 This is because Hulet precomputes an appropriate zoom factor to map the viewport onto the canvas pixel dimensions.
 Thus, to zoom in by a factor of two, we merely zoom in twice as much as we already have.
 
-Sost currently supports four types of geometric objects: points, lines, polygons, and circles.
-Points are drawn as a circle centered at the point's coordinates with a radius equal to `three.pointSize` and color `three.pointStyle`.
-Lines are drawn between a pair of provided coordinates with thickness `three.lineWidth` and color `three.strokeStyle`.
+Hulet currently supports four types of geometric objects: points, lines, polygons, and circles.
+Points are drawn as a circle centered at the point's coordinates with a radius equal to `two.pointSize` and color `two.pointStyle`.
+Lines are drawn between a pair of provided coordinates with thickness `two.lineWidth` and color `two.strokeStyle`.
 There are three types of lines: segments, rays, and lines, each corresponding to different geometric definitions.
-Polygons are drawn between three or more coordinates with color `three.fillStyle`.
+Polygons are drawn between three or more coordinates with color `two.fillStyle`.
 Circles take a center and radius, and also have the same stroke and fill properties.
-Stroke/fill modes can be selectively enabled or disabled for closed geometric objects by switching the `three.fill` and `three.stroke` properties.
+Stroke/fill modes can be selectively enabled or disabled for closed geometric objects by switching the `two.fill` and `two.stroke` properties.
 
 Let's demo all four of these objects in our scene:
 
@@ -175,4 +174,4 @@ Running the code should produce the example screenshot.
 ## Future Work
 
 Hulet is very much still a work in progress and there is lots to be done.
-If you want to help out, it is highly recommended that you fork the repository and view the [TODOS](https://github.com/quantum9Innovation/hulet/blob/main/TODOS.md) as well as any open issues for work that you can help with.
+If you want to help out, it is highly recommended that you fork the repository and look at any open issues for work that you can help with.
