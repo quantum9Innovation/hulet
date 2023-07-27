@@ -33,9 +33,9 @@ jobs:
         node-version: '18.13'
     - name: Install dependencies
       run: |
-        yarn cache clean
-        yarn install --update-checksums
-        yarn install
+        npm cache clean
+        npm install --update-checksums
+        npm install
     - name: Run tests
       run: |
-        yarn retest
+        npm run retest
