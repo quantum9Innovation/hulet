@@ -45,6 +45,5 @@
   "bugs": {
     "url": "https://github.com/quantum9Innovation/hulet/issues"
   },
-  "homepage": "https://github.com/quantum9Innovation/hulet#readme",
-  "packageManager": "yarn@3.6.1"
+  "homepage": "https://github.com/quantum9Innovation/hulet#readme"
 }
