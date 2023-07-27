@@ -46,9 +46,5 @@
     "url": "https://github.com/quantum9Innovation/hulet/issues"
   },
   "homepage": "https://github.com/quantum9Innovation/hulet#readme",
-  "engines": {
-    "node": ">=16.0.0",
-    "yarn": "^3.6.1"
-  },
   "packageManager": "yarn@3.6.1"
 }
