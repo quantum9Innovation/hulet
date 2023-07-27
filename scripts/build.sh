@@ -2,7 +2,7 @@
 echo "Transpiling from Typescript"
 yarn run tsc -p tsconfig.json
 if [ ! -d dist/ts/test/baseline ]; then
-    mkdir dist/ts/test/baseline
+    mkdir -p dist/ts/test/baseline
 fi
 cp test/baseline/* dist/ts/test/baseline
 echo "Building project"
