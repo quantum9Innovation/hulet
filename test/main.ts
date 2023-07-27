@@ -35,7 +35,6 @@ test('algebra', () => {
     two.grid(1 / 2, '#ccc')
     two.grid(1)
     two.axes()
-    two.label(1 / 2, '16px times')
 
     // Parametric
     const f = (t: number): vector => [Math.cos(t), Math.sin(t)]

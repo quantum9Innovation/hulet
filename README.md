@@ -169,7 +169,7 @@ two.graph(h)
 ```
 
 There you have it!
-Running the code should produce the example screenshot.
+Running the code should produce the example screenshot, with added labels.
 
 ## Future Work
 
